@@ -1,0 +1,94 @@
+Collection of my dotfiles and related utils.
+
+The rest of this README describes how I handle my dotfiles using git
+and GNU Stow.
+
+* Handling dotfiles with git and GNU Stow
+
+A small system for handling configuration files, a.k.a "dotfiles".
+Using git for version control and GNU Stow for putting the files in
+place.
+
+** Requirements
+
+- Symlinks -- makes editing and diffing much easier.
+- Mirror filesystem tree -- avoids unnecessary abstraction.
+- Different settings for different devices (OS X, Debian...).
+- Personal configuration & utils (=~/=).
+- System-wide configuration (=/etc/= etc.).
+
+** Files to include
+
+- Personal dotfiles.
+- Util scripts (=~/bin/=).
+- System-wide configuration files.
+
+** Implementation using GNU Stow
+
+GNU Stow mirrors a filesystem tree using relative symlinks.
+
+Files are organized as /installation images/ (filesystem trees) in
+/packages/ in a root /stow directory/. Stow then mirrors the
+installation image to a /target directory/, which defaults to the
+parent of the stow dir.
+
+A small example makes this more clear:
+
+#+BEGIN_EXAMPLE
+~/dotfiles/
+    zsh/
+        .config/
+            zsh/
+                .zshrc
+    emacs/
+        .emacs.d/
+            init.el
+    etc/
+       zsh/
+           zshenv
+#+END_EXAMPLE
+
+So, in this case, =~/dotfiles/= is our stow directory. This makes =~/=
+the default target directory.
+
+We put =~/dotfiles/= under version control using git.
+
+Inside the =~/dotfiles/= dir, we package the files by program -- Emacs
+files goes in =emacs/=, Zsh files in =~zsh/=, etc. etc. Organizing the
+files in this way means that packages can be installed/removed
+separately as desired.
+
+If different sets of files are desired for different hosts, we use
+different package directories. E.g. =emacs-deb/= and =emacs-osx/=. If
+duplicate files becomes a problem, they can be symlinked from a common
+directory, e.g. =emacs-common/=.
+
+Installation is quite straight-forward:
+
+#+BEGIN_SRC sh
+cd ~/dotfiles
+stow zsh
+stow emacs
+stow --target /etc etc
+#+END_SRC
+
+Note that we need to tell Stow to use a different target directory
+when installing to =/etc/=, by specifying the =--target= option.
+
+** Special handling of system configuration
+
+System configuration files might need to be =chown=-ed before
+installation, as git does not save this information. A possible
+solution is to make a shell script that sets correct ownerships
+and run it before =stow=.
+
+** Possible improvements
+
+- Templating. Makes it easier to handle small changes between
+  different devices, at the cost of adding a build step. Could be
+  implemented with Python + Jinja2.
+
+** References
+
+- https://www.gnu.org/software/stow/
+- http://brandon.invergo.net/news/2012-05-26-using-gnu-stow-to-manage-your-dotfiles.html
