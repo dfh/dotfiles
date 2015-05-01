@@ -3,7 +3,7 @@
 This repo contains two things:
 
 1. My personal collection of dotfiles and related utils.
-2. A description of how I handle them using git and GNU Stow.
+2. A description of how I handle them using git and [[http://www.gnu.org/software/stow/][GNU Stow]].
 
 ** TL;DR
 
@@ -14,7 +14,7 @@ cd dotfiles
 stow emacs # in general: stow {package name}
 #+END_SRC
 
-You might have to install [[http://www.gnu.org/software/stow/][GNU Stow]].
+You might have to install GNU Stow.
 
 * Handling dotfiles using git and GNU Stow
 
