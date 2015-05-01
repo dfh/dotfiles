@@ -1,11 +1,24 @@
-Collection of my dotfiles and related utils.
+* My dotfiles
 
-The rest of this README describes how I handle my dotfiles using git
-and GNU Stow.
+This repo contains two things:
 
-* Handling dotfiles with git and GNU Stow
+1. My personal collection of dotfiles and related utils.
+2. A description of how I handle them using git and GNU Stow.
 
-A small system for handling configuration files, a.k.a "dotfiles".
+** TL;DR
+
+#+BEGIN_SRC sh
+cd ~
+git clone https://github.com/dfh/dotfiles
+cd dotfiles
+stow emacs # in general: stow {package name}
+#+END_SRC
+
+You might have to install GNU Stow.
+
+* Handling dotfiles using git and GNU Stow
+
+A small system for handling configuration files, a.k.a /dotfiles/.
 Using git for version control and GNU Stow for putting the files in
 place.
 
@@ -13,9 +26,9 @@ place.
 
 - Symlinks -- makes editing and diffing much easier.
 - Mirror filesystem tree -- avoids unnecessary abstraction.
-- Different settings for different devices (OS X, Debian...).
+- Different settings for different devices (OS X, Debian, ...).
 - Personal configuration & utils (=~/=).
-- System-wide configuration (=/etc/= etc.).
+- System-wide configuration (=/etc/= et al.).
 
 ** Files to include
 
@@ -75,20 +88,23 @@ stow --target /etc etc
 Note that we need to tell Stow to use a different target directory
 when installing to =/etc/=, by specifying the =--target= option.
 
-** Special handling of system configuration
+** Special handling of system configuration files
 
 System configuration files might need to be =chown=-ed before
-installation, as git does not save this information. A possible
-solution is to make a shell script that sets correct ownerships
-and run it before =stow=.
+installation, as git does not save this information. I have not yet
+decided how to best solve this. A possible solution is to make a shell
+script that sets correct ownerships and run it before =stow=.
 
 ** Possible improvements
 
-- Templating. Makes it easier to handle small changes between
-  different devices, at the cost of adding a build step. Could be
-  implemented with Python + Jinja2.
+*** Templating
+
+Makes it easier to handle small changes between different devices, at
+the cost of adding a build step. Could be implemented with Python +
+Jinja2.
 
 ** References
 
-- https://www.gnu.org/software/stow/
 - http://brandon.invergo.net/news/2012-05-26-using-gnu-stow-to-manage-your-dotfiles.html
+- https://wiki.archlinux.org/index.php/Dotfiles
+- https://www.gnu.org/software/stow/
