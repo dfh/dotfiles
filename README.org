@@ -76,6 +76,8 @@ different package directories. E.g. =emacs-deb/= and =emacs-osx/=. If
 duplicate files becomes a problem, they can be symlinked from a common
 directory, e.g. =emacs-common/=.
 
+** Installating files using Stow
+
 Installation is quite straight-forward:
 
 #+BEGIN_SRC sh
@@ -83,10 +85,19 @@ cd ~/dotfiles
 stow zsh
 stow emacs
 stow --target /etc etc
+# etc. etc.
 #+END_SRC
 
 Note that we need to tell Stow to use a different target directory
 when installing to =/etc/=, by specifying the =--target= option.
+
+If your dotfiles directory is not a direct child of your home
+directory, you will need to use the =--target= option, also.
+
+Optionally, you might want to use the =--no-folding= flag to avoid
+symlinking directories. This will avoid your dotfiles repo being
+cluttered by ELPA packages installed to your =~/.emacs.d/= directory,
+for example.
 
 ** Special handling of system configuration files
 
