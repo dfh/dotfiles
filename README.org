@@ -14,7 +14,7 @@ cd dotfiles
 stow emacs # in general: stow {package name}
 #+END_SRC
 
-You might have to install GNU Stow.
+You might have to install [[http://www.gnu.org/software/stow/][GNU Stow]].
 
 * Handling dotfiles using git and GNU Stow
 
