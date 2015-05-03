@@ -6,7 +6,6 @@
 #
 
 autoload -U compinit promptinit colors run-help
-autoload -Uz vcs_info
 compinit
 promptinit
 colors
@@ -38,15 +37,10 @@ bindkey -e # e for Emacs
 bindkey "^r" history-incremental-search-backward
 
 
-zstyle ':vcs_info:*' enable git
-zstyle ':vcs_info:*' formats '%{${fg[blue]}%}%b%{$reset_color%} (%r)'
-precmd() {
-    vcs_info
-}
-PS1="%F{blue}%n@%m %F{green}%~$prompt_newline%(?..%F{red}%? )%F{magenta}>:%f "
+PS1="%F{blue}%n@%m %F{green}%~$prompt_newline%F{magenta}>:%f "
 PS2="> "
 PS3="? "
-RPROMPT="${vcs_info_msg_0_}"
+RPROMPT="%(?..%F{red}%?%f"
 
 
 fortune
