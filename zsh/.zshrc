@@ -33,11 +33,12 @@ export LANG=en_US.UTF-8
 export LC_CTYPE=sv_SE.UTF-8
 
 
-unalias run-help
+unalias run-help 2> /dev/null
 alias help=run-help
 alias zshrl="source ~/.zshrc"
 alias x="chmod u+x"
 alias l="ls -lh" # -h for Human readable
+
 
 bindkey -e # e for Emacs
 bindkey "^r" history-incremental-search-backward
@@ -52,3 +53,6 @@ PS1="%F{blue}%n@%m %F{green}%~$prompt_newline%(?..%F{red}%? )%F{magenta}>:%f "
 PS2="> "
 PS3="? "
 RPROMPT="${vcs_info_msg_0_}"
+
+
+fortune
