@@ -3,9 +3,9 @@
 This repo contains two things:
 
 1. My personal collection of dotfiles and related utils.
-2. A description of how I handle them using git and [[http://www.gnu.org/software/stow/][GNU Stow]].
+2. A description of how I handle them using Git and [[http://www.gnu.org/software/stow/][GNU Stow]].
 
-** TL;DR
+** Installation
 
 #+BEGIN_SRC sh
 cd ~
@@ -16,10 +16,10 @@ stow emacs # in general: stow {package name}
 
 You might have to install GNU Stow.
 
-* Handling dotfiles using git and GNU Stow
+** Handling dotfiles using Git and GNU Stow
 
 A small system for handling configuration files, a.k.a /dotfiles/.
-Using git for version control and GNU Stow for putting the files in
+Using Git for version control and GNU Stow for putting the files in
 place.
 
 ** Requirements
@@ -64,7 +64,7 @@ A small example makes this more clear:
 So, in this case, =~/dotfiles/= is our stow directory. This makes =~/=
 the default target directory.
 
-We put =~/dotfiles/= under version control using git.
+We put =~/dotfiles/= under version control using Git.
 
 Inside the =~/dotfiles/= dir, we package the files by program -- Emacs
 files goes in =emacs/=, Zsh files in =~zsh/=, etc. etc. Organizing the
@@ -102,7 +102,7 @@ for example.
 ** Special handling of system configuration files
 
 System configuration files might need to be =chown=-ed before
-installation, as git does not save this information. I have not yet
+installation, as Git does not save this information. I have not yet
 decided how to best solve this. A possible solution is to make a shell
 script that sets correct ownerships and run it before =stow=.
 
