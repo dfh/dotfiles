@@ -1,11 +1,10 @@
 * My dotfiles
 
-This repo contains two things:
+My personal collection of dotfiles and related utils.
 
-1. My personal collection of dotfiles and related utils.
-2. A description of how I handle them using Git and [[http://www.gnu.org/software/stow/][GNU Stow]].
+Read on for a description of how I handle them using Git and [[http://www.gnu.org/software/stow/][GNU Stow]].
 
-** Installation
+** TL;DR -- installation
 
 #+BEGIN_SRC sh
 cd ~
