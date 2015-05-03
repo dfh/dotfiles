@@ -1,9 +1,6 @@
 #
 # Zsh configuration file. Will be sourced when starting an interactive shell.
 #
-# TODO Set up auto-completion.
-# TODO Zmv.
-#
 
 autoload -U compinit promptinit colors run-help
 compinit
