@@ -1,6 +1,9 @@
 #
 # Zsh configuration file. Will be sourced when starting an interactive shell.
 #
+# TODO Set up auto-completion.
+# TODO Zmv.
+#
 
 autoload -U compinit promptinit colors run-help
 autoload -Uz vcs_info
@@ -11,14 +14,12 @@ colors
 
 # http://zsh.sourceforge.net/Doc/Release/Options.html
 
-setopt promptsubst # expansion & substitution in prompt
-setopt histignorespace # prefix cmd/alias by space to avoid saving to
-		       # history.
-setopt histreduceblanks # trim blanks.
+setopt promptsubst	 # expansion & substitution in prompt.
+setopt histignorespace	 # prefix cmd/alias by space to leave out of history.
+setopt histreduceblanks	 # trim blanks.
 setopt histignorealldups # remove all old duplicates.
-setopt histverify # don't execute history expansions directly.
-setopt sharehistory # save commands to history file immediately, and
-		    # import new commands.
+setopt histverify	 # don't execute history expansions directly.
+setopt sharehistory      # sync history w/ file.
 
 
 HISTFILE=~/.config/zsh/.zhistory
