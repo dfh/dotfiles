@@ -1,0 +1,10 @@
+* My Emacs configuration
+
+See comments in =.emacs.d/init.el=.
+
+** To do
+
+- TODO Install folding.el
+- TODO Organize: (1) basic setup, (2) mode-specific, (3) global keybindings, (4) initialization
+- TODO evil-mode?
+- TODO Hydra?
