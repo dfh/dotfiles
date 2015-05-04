@@ -8,36 +8,28 @@
 
 (require 'package)
 (add-to-list 'package-archives
-             '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+             '("melpa-stable" . "http://stable.melpa.org/packages/"))
 (add-to-list 'package-archives
-             '("melpa" . "http://melpa.org/packages/") t)
+             '("melpa" . "http://melpa.org/packages/"))
 (package-initialize)
 
 ;;
-;; GPG
-
-(when (file-executable-p "/opt/local/bin/gpg")
-  (setq epg-gpg-program "/opt/local/bin/gpg"))
-
+;; First off, lets set `exec-path' from shell $PATH.
 ;;
-;; exec-path-from-shell: https://github.com/purcell/exec-path-from-shell
+;; https://github.com/purcell/exec-path-from-shell
+;;
 
 (exec-path-from-shell-initialize)
-
-;;
-;; Then some manually installed ones.
-
-;; (add-to-list 'load-path "~/.emacs.d/packages/folding-mode/")
-;; (autoload 'folding-mode "folding" "Folding mode" t)
-;; (autoload 'turn-off-folding-mode "folding" "Folding mode" t)
-;; (autoload 'turn-on-folding-mode "folding" "Folding mode" t)
-
-(setq ns-function-modifier 'hyper) ; Fn -> Hyper
 
 ;;
 ;; Better defaults
 ;;
 ;; https://github.com/technomancy/better-defaults/
+;;
+;; TODO Move to correspodning places.
+;;
+
+(setq ns-function-modifier 'hyper) ; Fn -> Hyper
 
 (autoload 'zap-up-to-char "misc"
   "Kill up to, but not including ARGth occurrence of CHAR." t)
@@ -73,6 +65,17 @@
 (setq custom-file "~/.emacs.d/custom.el")
 
 ;;
+;; Folding
+;;
+
+;; (add-to-list 'load-path "~/.emacs.d/packages/folding-mode/")
+;; (autoload 'folding-mode "folding" "Folding mode" t)
+;; (autoload 'turn-off-folding-mode "folding" "Folding mode" t)
+;; (autoload 'turn-on-folding-mode "folding" "Folding mode" t)
+
+
+
+;;
 ;; UTF-8
 
 ;; http://stackoverflow.com/questions/20723229/how-to-reset-emacs-to-save-files-in-utf-8-unix-character-encoding
@@ -95,7 +98,7 @@
 (ido-everywhere t)
 (ido-vertical-mode t)
 (flx-ido-mode 1) ; better flex matching -- https://github.com/lewang/flx
-(desktop-save-mode t)
+;(desktop-save-mode t)
 
 ;;
 ;; Mode hooks
@@ -127,9 +130,6 @@
 (column-number-mode 1)
 (setq inhibit-startup-message t)
 (setq inhibit-startup-echo-area-message t)
-
-(custom-set-faces
- '(default ((t (:height 120 :family "Menlo")))))
 
 ;; always use short prompt (y/n instead of yes/no)
 (defalias 'yes-or-no-p 'y-or-n-p)
@@ -177,6 +177,13 @@
 ;; https://github.com/wasamasa/dotemacs/blob/master/theme/my-solarized-theme.el.
 ;;
 ;; See theme/my-solarized-theme.el for details.
+
+;; http://ergoemacs.org/emacs/emacs_list_and_set_font.html
+(setq initial-frame-alist '((font . "DejaVu Sans Mono-14")))
+(setq default-frame-alist '((font . "DejaVu Sans Mono-14")))
+;; TODO remove?
+(custom-set-faces
+ '(default ((t (:height 140 :family "DejaVu Sans Mono")))))
 
 (setq custom-theme-load-path '("~/.emacs.d/theme/" t))
 (load-theme 'my-solarized t t) ; t t -> no-confirm & enable
@@ -233,62 +240,90 @@
 (setq cider-show-error-buffer nil) ; don't show error buffer in REPL automatically
 
 ;;
-;; circe
+;; {{{circe
 ;;
-;; See: https://github.com/wasamasa/dotemacs/blob/master/init.org#authentication-and-identification
+;; Emacs ♥ IRC.
+;;
+;; I'm quite new to IRC, so this setup is pretty basic.
+;;
+;; See: https://github.com/wasamasa/dotemacs/blob/master/init.org#circe
 ;;
 
-(load-file "~/secrets/emacs.el")
+;;
+;; First set up my identity and part/quit messages to be quite anonymous.
+;;
+
 (setq circe-default-realname "David"
       circe-default-nick "dfh"
       circe-default-user "david"
       circe-default-realname "David"
       circe-default-part-message "Bye bye birdie"
-      circe-default-quite-message "Bye bye birdie")
+      circe-default-quit-message "Bye bye birdie")
 
+;;
+;; I connect through a local ZNC, because I want playback on some
+;; low-traffic personal channels.
+;;
+;; To keep passwords out of the config file and out of Git, lets
+;; define them as variables in a separate file.
+;;
+
+(load-file "~/secrets/emacs.el")
 (setq circe-network-options
       `(("Freenode"
-	 :host "dumpen"
-	 :port 8251
-	 :tls t
-	 :user "admin/Freenode"
-	 :pass ,dumpen-znc-password,
-	 :nickserv-password ,freenode-password
-	 )))
+         :host "dumpen"
+         :port 8251
+         :tls t
+         :user "admin/Freenode"
+         :pass ,dumpen-znc-password,
+         :nickserv-password ,freenode-password
+         )))
 
-(setq circe-use-cycle-completion t) ; tab-complete w/ cycling
+;;
+;; I find logging quite nice, so lets log everything.
+;;
 
 (load "lui-logging" nil t)
+(setq lui-logging-directory "~/nexus/storage/logs/circe/")
 (enable-lui-logging-globally)
 
-;; (custom-set-faces
-;;  '(circe-server-face          ((t :inherit font-lock-comment-face)))
-;;  '(circe-fool-face            ((t :inherit font-lock-comment-face)))
-;;  `(lui-time-stamp-face        ((t :foreground ,solarized-violet)))
-;;  `(circe-my-message-face      ((t :foreground ,solarized-yellow)))
-;;  `(lui-button-face            ((t :foreground ,solarized-violet)))
-;;  `(circe-originator-face      ((t :foreground ,solarized-blue)))
-;;  `(circe-highlight-nick-face  ((t :foreground ,solarized-cyan)))
-;;  `(circe-highlight-all-nicks-face ((t :foreground ,solarized-blue)))
-;;  `(circe-prompt-face          ((t :foreground ,solarized-orange :background nil))))
+;;
+;; Basic tweaks.
+;;
 
+;; Cycle through tab-completed nicks, please.
+(setq circe-use-cycle-completion t)
+
+;; Hide JOIN, PART & QUIT messages for lurkers.
+(set circe-reduce-lurker-spam t)
+
+;; Set a couple of format strings.
 (setq circe-format-self-say "<{nick}> {body}"
       circe-format-say "<{nick}> {body}"
       circe-format-server-topic "*** Topic change by {origin}: {topic-diff}"
       circe-server-buffer-name "{network}"
-      circe-prompt-string (propertize ">>> " 'face 'circe-prompt-face)
-      lui-time-stamp-position 'right-margin
-      lui-time-stamp-format "%H:%M")
+      circe-prompt-string (propertize ">>> " 'face 'circe-prompt-face))
 
+;; Display timestamps in the right margin.
+(setq lui-time-stamp-position 'right-margin
+      lui-time-stamp-format "%H:%M")
 (add-hook 'lui-mode-hook 'my-circe-set-margin)
 (defun my-circe-set-margin ()
   (setq right-margin-width 5))
 
+;; Ask to use an external autopaste service when pasting many lines.
 (require 'lui-autopaste)
 (add-hook 'circe-channel-mode-hook 'enable-lui-autopaste)
 
+;; Highlight all nicks in current channel (and not only in own messages).
 (require 'circe-highlight-all-nicks)
 (enable-circe-highlight-all-nicks)
+
+;;
+;; Extra keybindings.
+;;
+;; Make C-l redraw and reposition to bottom of window.
+;;
 
 (defun my-move-to-bottom ()
   "Moves point to end of buffer, and repositions to bottom of window."
@@ -299,9 +334,16 @@
 (with-eval-after-load 'lui
   (define-key lui-mode-map (kbd "C-l") 'my-move-to-bottom))
 
+;;
+;; Entry point
+;;
+
 (defun my-irc ()
   (interactive)
   (circe "Freenode"))
+
+;;}}}
+
 
 ;;
 ;; ansi-term
@@ -363,7 +405,7 @@
 ;; Global key bindings.
 
 ;; http://www.emacswiki.org/emacs/FullScreen#toc26
-(global-set-key (kbd "C-c f") 'toggle-frame-fullscreen)
+(global-set-key (kbd "H-f") 'toggle-frame-fullscreen)
 (global-set-key (kbd "H-h") 'windmove-left)
 (global-set-key (kbd "H-j") 'windmove-down)
 (global-set-key (kbd "H-k") 'windmove-up)
@@ -385,10 +427,13 @@
 (global-set-key (kbd "H-g") 'magit-status)
 (global-set-key (kbd "C-c t") 'my-visit-term-buffer)
 (global-set-key (kbd "H-u") 'browse-url)
+(global-set-key (kbd "H-x") 'eval-buffer)
 
 (define-key key-translation-map (kbd "H-a") (kbd "å"))
 (define-key key-translation-map (kbd "H-e") (kbd "ä"))
 (define-key key-translation-map (kbd "H-o") (kbd "ö"))
+(define-key key-translation-map (kbd "H-1") (kbd "♥"))
+
 
 ;;
 ;; My functions
@@ -423,3 +468,11 @@
 	(other-window 1)
 	(ansi-term (getenv "SHELL")))
     (switch-to-buffer-other-window "*ansi-term*")))
+
+
+;;
+;; GPG
+
+(when (file-executable-p "/opt/local/bin/gpg")
+  (setq epg-gpg-program "/opt/local/bin/gpg"))
+
