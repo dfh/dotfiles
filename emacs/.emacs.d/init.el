@@ -11,7 +11,13 @@
              '("melpa-stable" . "http://stable.melpa.org/packages/"))
 (add-to-list 'package-archives
              '("melpa" . "http://melpa.org/packages/"))
+(add-to-list 'package-archives
+             '("marmalade" "http://marmalade-repo.org/packages/"))
 (package-initialize)
+
+;;
+;; {{{Basics
+;;
 
 ;;
 ;; First off, lets set `exec-path' from shell $PATH.
@@ -22,47 +28,102 @@
 (exec-path-from-shell-initialize)
 
 ;;
-;; Better defaults
-;;
+;; Then some "Better defaults". These are taken from Technomancy:
 ;; https://github.com/technomancy/better-defaults/
 ;;
-;; TODO Move to correspodning places.
+;; I don't understand all of the settings in detail, so I have
+;; commented them to get at least an idea of what they do.
 ;;
 
-(setq ns-function-modifier 'hyper) ; Fn -> Hyper
-
-(autoload 'zap-up-to-char "misc"
-  "Kill up to, but not including ARGth occurrence of CHAR." t)
-
+;; When opening files with identical names in different places,
+;; display them like paths. Feels most familiar to me.
 (require 'uniquify)
 (setq uniquify-buffer-name-style 'forward)
 
+;; Save place of point in file, and return to it when visited again.
+;; Makes sense.
 (require 'saveplace)
 (setq-default save-place t)
 
+;;
+;; First some global keybinds from Better Defaults.
+;;
+;; TODO move to global keybinds section
+;;
+
+;; `hippie-expand' tries a bunch of auto-completion functions.
 (global-set-key (kbd "M-/") 'hippie-expand)
+
+;; "Advanced replacement for BufferMenu". Sounds good. Has nice
+;; colors, too.
 (global-set-key (kbd "C-x C-b") 'ibuffer)
+
+(autoload 'zap-up-to-char "misc"
+  "Kill up to, but not including ARGth occurrence of CHAR." t)
 (global-set-key (kbd "M-z") 'zap-up-to-char)
 
+;; Use regexp versions of fwd/rev incremental search by default.
 (global-set-key (kbd "C-s") 'isearch-forward-regexp)
 (global-set-key (kbd "C-r") 'isearch-backward-regexp)
 (global-set-key (kbd "C-M-s") 'isearch-forward)
 (global-set-key (kbd "C-M-r") 'isearch-backward)
 
+;; "Under X, killing and yanking uses the X clipboard rather than just
+;; the primary selection". Also, when copying something from another
+;; program and then killing in Emacs, save the clipboard content to
+;; the kill ring to not lose it.
 (setq x-select-enable-clipboard t
       x-select-enable-primary t
-      save-interprogram-paste-before-kill t
-      apropos-do-all t
-      mouse-yank-at-point t
-      require-final-newline t
-      load-prefer-newer t
-      ediff-window-setup-function 'ediff-setup-windows-plain
-      save-place-file (concat user-emacs-directory "places")
-      backup-directory-alist `(("." . ,(concat user-emacs-directory
+      save-interprogram-paste-before-kill t)
+
+;; "Apropos commands perform more extensive searches than default."
+(setq apropos-do-all t)
+
+;; Insert at point instead of the location of the click.
+(setq mouse-yank-at-point t)
+
+;; All crontab lines must end with a newline. If not, the command
+;; will be silently ignored. This makes it a *very* good idea to
+;; make sure there always is a final newline in there. There might be
+;; other similar situations, I don't know.
+(setq require-final-newline t)
+
+;; When an explicit filename is not given, `load' tries various possible
+;; suffixes. This prevents "elisp bytecode from shadowing more up-to-date
+;; source files."
+(setq load-prefer-newer t)
+
+;; Make ediff "use the existing frame instead of creating a new one."
+(setq ediff-window-setup-function 'ediff-setup-windows-plain)
+
+;; Save places in ~/.emacs.d/places
+(setq save-place-file (concat user-emacs-directory "places")))
+
+;; Save backup files in ~/.emacs.d/backups instead of litter the file
+;; system.
+(setq backup-directory-alist `(("." . ,(concat user-emacs-directory
 					       "backups"))))
 
-;; don't touch my init.el!
+;;
+;; That was the end of the Better Defaults. Now some other basic
+;; settings.
+;;
+
+;; I'm not using custom, so make it not touch my init.el!
 (setq custom-file "~/.emacs.d/custom.el")
+
+;;
+;; UTF-8
+;;
+;; TODO
+
+;; http://stackoverflow.com/questions/20723229/how-to-reset-emacs-to-save-files-in-utf-8-unix-character-encoding
+(set-language-environment 'utf-8)
+(set-default-coding-systems 'utf-8)
+(set-selection-coding-system 'utf-8)
+(set-locale-environment "en.UTF-8")
+(prefer-coding-system 'utf-8)
+(setq utf-translate-cjk-mode nil) ; disable CJK coding/encoding
 
 ;;
 ;; Folding
@@ -74,17 +135,6 @@
 ;; (autoload 'turn-on-folding-mode "folding" "Folding mode" t)
 
 
-
-;;
-;; UTF-8
-
-;; http://stackoverflow.com/questions/20723229/how-to-reset-emacs-to-save-files-in-utf-8-unix-character-encoding
-(set-language-environment 'utf-8)
-(set-default-coding-systems 'utf-8)
-(set-selection-coding-system 'utf-8)
-(set-locale-environment "en.UTF-8")
-(prefer-coding-system 'utf-8)
-(setq utf-translate-cjk-mode nil) ; disable CJK coding/encoding
 
 ;;
 ;; Modes
@@ -118,7 +168,7 @@
 (setq js-indent-level 4)
 (setq comment-column 0) ; always put comment directly after end of line
 (setq comment-fill-column nil)
-(setq fill-column 80)
+(setq fill-column 70)
 (setq sentence-end-double-space nil) ; *one* space between sentences
 (setq next-line-add-newlines t)	; add newline when C-n at EOF
 
@@ -190,63 +240,19 @@
 (enable-theme 'my-solarized)
 
 ;;
-;; News Ticker
-;;
-;; Feed reader for Emacs. I set it up to use w3m for rendering HTML.
-;; w3m must be installed separately, e.g. "sudo port install w3m".
-;;
-;; TODO Customize fetch interval.
-;;
-
-;; (require 'newsticker)
-;; (require 'w3m)
-;; (setq newsticker-html-renderer 'w3m-region
-;;       newsticker-url-list-defaults nil)
-;; (setq newsticker-url-list '(
-;;                             ("Brandon Invergo" "http://brandon.invergo.net/atom.xml")
-;;                             ))
-;; (newsticker-start)
-
-;;
-;; Elisp
-
-(define-key emacs-lisp-mode-map (kbd "M-.") 'find-function-at-point)
-
-;;
-;; ido-mode -- find files and buffers with fuzzy matching
-
-;; use flx-ido highlighting instead of ido-mode
-(setq ido-use-faces nil)
-(setq ido-enable-flex-matching t)
-
-;;
-;; Paredit
-
-;; http://www.emacswiki.org/emacs/ParEdit
-;; (autoload FUNCTION FILE &optional DOCSTRING INTERACTIVE TYPE)
-(autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of List code." t)
-(add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)
-(add-hook 'clojure-mode-hook #'enable-paredit-mode)
-
-;;
-;; Dired
-
-;;(require 'dired+)
-;;(toggle-diredp-find-file-reuse-dir t) ; reuse buffers
-
-;;
-;; CIDER
-
-(setq cider-show-error-buffer nil) ; don't show error buffer in REPL automatically
-
-;;
 ;; {{{circe
 ;;
 ;; Emacs ♥ IRC.
 ;;
 ;; I'm quite new to IRC, so this setup is pretty basic.
 ;;
-;; See: https://github.com/wasamasa/dotemacs/blob/master/init.org#circe
+;; First I tried rcirc, but I couldn't get the authentication to the ZNC bouncer
+;; to work. Or SSL. I don't remember. Then I tried ERC, but I had some problem
+;; with it, too. I found Circe, and so far it has been working well. I'm quite new
+;; to IRC, so my setup is pretty basic. I got a lot of it from wasamasa on GitHub,
+;; see link below.
+;;
+;; https://github.com/wasamasa/dotemacs/blob/master/init.org#circe
 ;;
 
 ;;
@@ -295,7 +301,7 @@
 (setq circe-use-cycle-completion t)
 
 ;; Hide JOIN, PART & QUIT messages for lurkers.
-(set circe-reduce-lurker-spam t)
+(setq circe-reduce-lurker-spam t)
 
 ;; Set a couple of format strings.
 (setq circe-format-self-say "<{nick}> {body}"
@@ -345,10 +351,62 @@
 ;;}}}
 
 
-;;
-;; ansi-term
 
-;(define-key term-mode-map (kbd "C-l") 'my-move-to-bottom)
+
+
+
+
+
+;;
+;; News Ticker
+;;
+;; Feed reader for Emacs. I set it up to use w3m for rendering HTML.
+;; w3m must be installed separately, e.g. "sudo port install w3m".
+;;
+;; TODO Customize fetch interval.
+;;
+
+;; (require 'newsticker)
+;; (require 'w3m)
+;; (setq newsticker-html-renderer 'w3m-region
+;;       newsticker-url-list-defaults nil)
+;; (setq newsticker-url-list '(
+;;                             ("Brandon Invergo" "http://brandon.invergo.net/atom.xml")
+;;                             ))
+;; (newsticker-start)
+
+;;
+;; Elisp
+
+(define-key emacs-lisp-mode-map (kbd "M-.") 'find-function-at-point)
+
+;;
+;; ido-mode -- find files and buffers with fuzzy matching
+
+;; use flx-ido highlighting instead of ido-mode
+(setq ido-use-faces nil)
+(setq ido-enable-flex-matching t)
+
+;;
+;; Paredit
+
+;; http://www.emacswiki.org/emacs/ParEdit
+;; (autoload FUNCTION FILE &optional DOCSTRING INTERACTIVE TYPE)
+(autoload 'enable-paredit-mode "paredit" "Turn on pseudo-structural editing of List code." t)
+(add-hook 'emacs-lisp-mode-hook #'enable-paredit-mode)
+(add-hook 'clojure-mode-hook #'enable-paredit-mode)
+
+;;
+;; Dired
+
+;;(require 'dired+)
+;;(toggle-diredp-find-file-reuse-dir t) ; reuse buffers
+
+;;
+;; CIDER
+
+(setq cider-show-error-buffer nil) ; don't show error buffer in REPL automatically
+
 
 ;;
 ;; Magit
@@ -403,13 +461,18 @@
 
 ;;
 ;; Global key bindings.
+;;
+
+;;
+;; OS X with a Microsoft NEK 4000 keyboard, I have Caps Lock bound to Ctrl,
+;; right and left Ctrl to Command, Alt to alt, and the Windows key and
+;; application key (between Alt and Ctrl) to Fn. Mapping Fn to Hyper gives me an
+;; extra modifier key, which is nice.
+;;
+(setq ns-function-modifier 'hyper)
 
 ;; http://www.emacswiki.org/emacs/FullScreen#toc26
 (global-set-key (kbd "H-f") 'toggle-frame-fullscreen)
-(global-set-key (kbd "H-h") 'windmove-left)
-(global-set-key (kbd "H-j") 'windmove-down)
-(global-set-key (kbd "H-k") 'windmove-up)
-(global-set-key (kbd "H-l") 'windmove-right)
 (global-set-key (kbd "M-i") 'idomenu)
 (global-set-key (kbd "<f12>") (lambda() (interactive) (find-file "~/nexus/nexus/todo.org")))
 (global-set-key (kbd "<f11>") (lambda() (interactive) (find-file "~/nexus/nexus/journal.org")))
@@ -429,9 +492,9 @@
 (global-set-key (kbd "H-u") 'browse-url)
 (global-set-key (kbd "H-x") 'eval-buffer)
 
-(define-key key-translation-map (kbd "H-a") (kbd "å"))
-(define-key key-translation-map (kbd "H-e") (kbd "ä"))
-(define-key key-translation-map (kbd "H-o") (kbd "ö"))
+(define-key key-translation-map (kbd "H-[") (kbd "å"))
+(define-key key-translation-map (kbd "H-'") (kbd "ä"))
+(define-key key-translation-map (kbd "H-;") (kbd "ö"))
 (define-key key-translation-map (kbd "H-1") (kbd "♥"))
 
 
