@@ -2,6 +2,7 @@
 # Zsh configuration file. Will be sourced when starting an interactive shell.
 #
 
+fpath=($HOME/.zsh-funcs/ $fpath)
 autoload -U compinit promptinit colors run-help
 compinit
 promptinit

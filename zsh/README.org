@@ -1,7 +1,13 @@
+* My Zsh configuration files
+
 Zsh has like a million features. Of which I use about 34. I try to use
 Emacs more and the shell less. So I won't bother setting it up to
 display the Git branch and whatnot. I do need to add some more aliases
 and set up completion though.
 
-- TODO Completion.
-- TODO zmv?	  
+My own Zsh functions are put in =~/.zsh-funcs/=.
+
+** To do
+
+- Completion.
+- zmv?	  
