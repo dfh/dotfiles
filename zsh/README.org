@@ -1,0 +1,41 @@
+* Configuration files for Zsh and Zim
+
+** How to install
+
+Run ~install.sh~, which copies the files in this directory
+to their respective places. Files in place prior to first installation will be
+saved with ~.orig~ appended.
+
+** How to uninstall
+
+To uninstall, run ~uninstall.sh~. This will remove the installed files and
+restore the original ones.
+
+** Zim, module manager
+
+~$ZDOTDIR~ is set to ~~/.config/zsh~ in ~~/.zshenv~.
+
+Zim is a module manager for Zsh. By default it also sets up autocompletion,
+useful aliases, etc.
+
+Zim installs to ~$ZDOTDIR/.zim/~ (the default location) and is configured by
+~$ZDOTDIR/.zimrc~. Zim installes a section in the ~.zshrc~ that sets it up.
+After this section you can add your own additional configuration if you wish,
+for example loading a theme.
+
+The look of the prompt is set by themes. I took the existing theme "asciiship"
+and made a few minor changes to it. See ~asciiship-djf/~. This is specfied in
+the ~.zimrc~ file.
+
+Other modules are also specified in ~.zimrc~. Put them at the end of the file.
+
+Installation and removal of Zim modules are handled by ~zimfw~:
+
+#+BEGIN_SRC sh
+zimfw install   # Install new modules specified in .zimrc.
+zimfw uninstall # Remove modules that were removed from .zimrc.
+zimfw update    # Update modules to the latest version (if module included in the Zim repo.)
+zimfw upgrade   # Upgrade Zim itself.
+#+END_SRC
+
+There are many other commands. ~zimfw help~ shows them all.
