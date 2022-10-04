@@ -13,7 +13,7 @@ restore the original ones.
 
 ** Zim, module manager
 
-~$ZDOTDIR~ is set to ~~/.config/zsh~ in ~~/.zshenv~.
+~$ZDOTDIR~ is set to ~​~/.config/zsh~ in ~​~/.zshenv~.
 
 Zim is a module manager for Zsh. By default it also sets up autocompletion,
 useful aliases, etc.
