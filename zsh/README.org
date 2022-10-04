@@ -11,7 +11,7 @@ saved with ~.orig~ appended.
 To uninstall, run ~uninstall.sh~. This will remove the installed files and
 restore the original ones.
 
-** Zim, module manager
+** Zim, a module manager
 
 ~$ZDOTDIR~ is set to ~​~/.config/zsh~ in ~​~/.zshenv~.
 
