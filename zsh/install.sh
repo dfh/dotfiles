@@ -10,7 +10,7 @@ echo
 # --no-target-directory makes cp not create a subdirectory within the target
 # directory if it already exists.
 #
-# The "| true" thing avoids exiting with error if target file already exists.
+# The "|| true" thing avoids exiting with error if target file already exists.
 #
 cp -v --no-clobber ~/.zshenv ~/.zshenv.orig || true
 cp -v --no-clobber ~/.config/zsh/.zshrc ~/.config/zsh/.zshrc.orig || true

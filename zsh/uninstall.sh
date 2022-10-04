@@ -7,7 +7,7 @@ echo
 #
 # --force makes mv overwrite target without asking.
 #
-# the "| true" thing makes mv not exit with error if target does not exist.
+# the "|| true" thing makes mv not exit with error if target does not exist.
 #
 mv -v ~/.zshenv.orig ~/.zshenv || true
 mv -v ~/.config/zsh/.zshrc.orig ~/.config/zsh/.zshrc || true
