@@ -1,5 +1,3 @@
-#+TITLE: README
-
 Dotfiles.
 
 Configuration files are organized per program, one folder each.
@@ -12,4 +10,4 @@ Each folder should have two files:
 For convenience, the configuration files don't include the ~.~ prefix. It will
 be added when installing.
 
-Tested on Debian 11 (Bullseye).
+Tested on Debian 11 (Bullseye.)
