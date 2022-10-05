@@ -1,0 +1,15 @@
+#+TITLE: README
+
+Dotfiles.
+
+Configuration files are organized per program, one folder each.
+
+Each folder should have two files:
+
+- ~install.sh~ :: Installs configuration files, backing up the old ones.
+- ~uninstall.sh~ :: Removes configuration files, restoring the old ones.
+
+For convenience, the configuration files don't include the ~.~ prefix. It will
+be added when installing.
+
+Tested on Debian 11 (Bullseye).
