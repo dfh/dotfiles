@@ -134,14 +134,19 @@ unset key
 # Zsh configuration file. Will be sourced when starting an interactive shell.
 #
 
+zstyle ':zim' disable-version-check yes  # Don't check for updates
+
 path+=('/home/david/bin')
 export PATH
 
-source $HOME/.config/secrets.sh
-
-zstyle ':zim' disable-version-check yes  # Don't check for updates
-
 fortune
+
+if [[ -f $HOME/.config/secrets.sh ]]; then
+   source $HOME/.config/secrets.sh
+else
+    echo
+    echo "WARNING: ~/.config/secrets.sh does not exist!"
+fi
 
 #
 # Keep 1000 lines of history within the shell and save it to ~/.zsh_history.
