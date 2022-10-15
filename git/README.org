@@ -1,0 +1,6 @@
+#+TITLE: Readme
+
+Configuration files for git.
+
+So far, it only installs/uninstalls a global gitignore file to
+~$HOME/.config/git/gitignore~.
