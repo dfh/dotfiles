@@ -38,6 +38,7 @@ cp -v zimrc ~/.config/zsh/.zimrc
 cp -v --recursive asciiship-djf ~/.config/zsh/asciiship-djf
 
 echo
+
 if [[ ! -f ~/.config/secrets.sh ]]; then
     echo "~/.config/secrets.sh does not exist, touching and chmod:ing it."
     touch ~/.config/secrets.sh

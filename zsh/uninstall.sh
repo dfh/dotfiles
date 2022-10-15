@@ -14,16 +14,13 @@ echo
 echo "Restoring original zshenv and zshrc if backups found..."
 echo
 
-#((restored = 1)) || true
 restored=false
 if [[ -f ~/.zshenv.orig ]]; then
     mv -v ~/.zshenv.orig ~/.zshenv
     restored=true
-    #((restored++))
 fi
 if [[ -f ~/.config/zsh/.zshrc.orig ]]; then
     mv -v ~/.config/zsh/.zshrc.orig ~/.config/zsh/.zshrc
-#    (( restored++))
     restored=true
 fi
 
