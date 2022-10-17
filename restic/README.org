@@ -1,0 +1,41 @@
+#+LANGUAGE: en
+#+AUTHOR: David Högberg (david@hgbrg.se)
+#+DATE: 2022-10-17
+#+VERSION: 2022-10-17
+#+TITLE: Restic backup readme
+
+Configuration files and systemd service configuration for restic.
+
+Restic is a tool for backing up data. It can back up to many different storage
+systems, such as local file systems, sftp, Amazon S3, etc. I use it to backup
+files to a NAS over sftp.
+
+This configuration sets up systemd to run a restic backup of specified files to
+a specified repository, once a day. The service name is 'restic-backup'. If
+~notify-send~ is available, a desktop notification will be sent when backup
+starts, and when it completes.
+
+Systems loads all connection settings as well as the repo password from
+~$HOME/.config/restic/restic-backup.conf~. This file should be chmod:ed to 600.
+The installation script will fail if this file does not exist. See
+~restic-backup.conf.example~ for an example.
+
+Three scripts are copied to ~$HOME/bin/~:
+
+- ~restic-backup-run.sh~ :: Runs the restic backup. This file is called by systemd when running the backup job.
+- ~restic-backup-init-repo.sh~ :: Initializes the restic repository.
+- ~restic-backup-info.sh~ :: Prints information about configuration, repo, and
+  systemd status.
+
+For running these scripts outside of systemd, the following environment
+variables must be set (the same as in the systemd configuration file):
+
+- ~$RESTIC_TARGET~ :: The target repo to back up to.
+- ~$RESTIC_SOURCE~ :: The source directory to backup from.
+- ~$RESTIC_EXCLUDE_FILE~ :: Path to file with restic exclude patterns.
+- ~$RESTIC_BIN~ :: Path to restic binary.
+- ~$RESTIC_PASSWORD~ :: Repo password. Optional, restic will prompt for password
+  if not set.
+
+Systemd is set up to run the ~restic-backup-run.sh~ once a day.
+

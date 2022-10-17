@@ -1,0 +1,11 @@
+#
+# Restic systemd configuration.
+#
+# Paths must be absolute.
+#
+
+RESTIC_TARGET="/path/to/restic/repo"
+RESTIC_SOURCE="/path/to/files/to/backup"
+RESTIC_EXCLUDE_FILE="/path/to/exclude/file"
+RESTIC_PASSWORD="{repo password}"
+RESTIC_BIN="/path/to/restic executable"
