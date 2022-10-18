@@ -1,7 +1,10 @@
 [Unit]
 Description=Restic backup service
+# https://unix.stackexchange.com/questions/126009/cause-a-script-to-execute-after-networking-has-started
+After=network-online.target
+Wants=network-online.target
 
 [Service]
 Type=oneshot
-ExecStart=%h/bin/restic-backup-run.sh
+ExecStart=%h/bin/restic-backup-run.sh 3
 EnvironmentFile=%h/.config/restic/restic-backup.conf

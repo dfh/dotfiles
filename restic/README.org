@@ -37,5 +37,12 @@ variables must be set (the same as in the systemd configuration file):
 - ~$RESTIC_PASSWORD~ :: Repo password. Optional, restic will prompt for password
   if not set.
 
-Systemd is set up to run the ~restic-backup-run.sh~ once a day.
+Systemd is set up to run the ~restic-backup-run.sh~ once a day. If you want to
+run it manually, you can use ~systemd --user start restic-backup~.
 
+Sometimes my connection is a bit shaky, and the backup might fail. I couldn't
+figure out how to get systemd to retry in case of failure, so I built it into
+~restic-backup-run.sh~ instead. If given an integer argument, the script will
+try that many times, with a 10 seconds wait in between tries. The default when
+running from the command line is to try just once. In the systemd service file,
+it is set up to try three times.

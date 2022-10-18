@@ -46,7 +46,7 @@ echo -n "    "
 systemctl --user enable --now restic-backup.timer
 
 echo
-echo "Installation complete. Backup will run daily."
+echo "Installation complete. Backup will run daily. Run it manually with 'systemctl --user start restic-backup'."
 
 if ! which notify-send > /dev/null; then
     echo
