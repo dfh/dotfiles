@@ -2,7 +2,7 @@
 #+AUTHOR: David Högberg (david@hgbrg.se)
 #+DATE: 2022-10-17
 #+VERSION: 2022-10-17
-#+TITLE: Restic backup readme
+#+TITLE: Restic backup
 
 Configuration files and systemd service configuration for restic.
 
