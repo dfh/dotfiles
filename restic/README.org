@@ -38,7 +38,7 @@ variables must be set (the same as in the systemd configuration file):
   if not set.
 
 Systemd is set up to run the ~restic-backup-run.sh~ once a day. If you want to
-run it manually, you can use ~systemd --user start restic-backup~.
+run the systemd job manually, you can use ~systemd --user start restic-backup~.
 
 Sometimes my connection is a bit shaky, and the backup might fail. I couldn't
 figure out how to get systemd to retry in case of failure, so I built it into
