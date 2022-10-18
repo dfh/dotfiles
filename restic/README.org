@@ -2,7 +2,7 @@
 #+AUTHOR: David Högberg (david@hgbrg.se)
 #+DATE: 2022-10-17
 #+VERSION: 2022-10-17
-#+TITLE: Restic backup readme
+#+TITLE: Restic backup
 
 Configuration files and systemd service configuration for restic.
 
@@ -11,7 +11,7 @@ systems, such as local file systems, sftp, Amazon S3, etc. I use it to backup
 files to a NAS over sftp.
 
 This configuration sets up systemd to run a restic backup of specified files to
-a specified repository, once a day. The service name is 'restic-backup'. If
+a specified repository, once a day. The service name is ~restic-backup~. If
 ~notify-send~ is available, a desktop notification will be sent when backup
 starts, and when it completes.
 
