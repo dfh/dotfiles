@@ -25,4 +25,5 @@ echo
 echo "Systemd status"
 echo
 
-systemctl --user status restic-backup
+# systemctl exits with code 3 even though successful for whatever reason
+systemctl --user status --full --no-pager restic-backup || true
