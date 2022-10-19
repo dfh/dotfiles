@@ -34,6 +34,7 @@ variables must be set (the same as in the systemd configuration file):
 - ~$RESTIC_SOURCE~ :: The source directory to backup from.
 - ~$RESTIC_EXCLUDE_FILE~ :: Path to file with restic exclude patterns.
 - ~$RESTIC_BIN~ :: Path to restic binary.
+- ~$RESTIC_EXTRA_ARGS~ :: Extra arguments to restic, see example in ~restic-backup.conf.extable~.
 - ~$RESTIC_PASSWORD~ :: Repo password. Optional, restic will prompt for password
   if not set.
 

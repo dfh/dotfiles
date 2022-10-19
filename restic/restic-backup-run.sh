@@ -14,11 +14,13 @@ set -euo pipefail
 #
 
 n=1
-if [[ $# != 0 ]] && [ $1 -eq $1 ] 2> /dev/null; then
-    n=$1
-else
-    echo "First argument must be an integer."
-    exit 1
+if [[ $# != 0 ]]; then
+    if [ $1 -eq $1 ] 2> /dev/null; then
+        n=$1
+    else
+        echo "First argument must be an integer."
+        exit 1
+    fi
 fi
 
 notify-send "Starting backup." || true
@@ -28,8 +30,10 @@ success="false"
 while [ $i -le $n ] && [[ "$success" == "false" ]]; do
     echo "Running backup. Attempt $i/$n."
     echo
+    echo "$RESTIC_BIN --repo \"$RESTIC_TARGET\" backup \"$RESTIC_SOURCE\" --exclude-file \"$RESTIC_EXCLUDE_FILE\" $RESTIC_EXTRA_ARGS"
+    echo
     start=$(date +%s)
-    if ! $RESTIC_BIN --repo "$RESTIC_TARGET" backup "$RESTIC_SOURCE" --exclude-file "$RESTIC_EXCLUDE_FILE" --exclude-if-present "__nobackup__" -o sftp.connections=4; then
+    if ! $RESTIC_BIN --repo "$RESTIC_TARGET" backup "$RESTIC_SOURCE" --exclude-file "$RESTIC_EXCLUDE_FILE" $RESTIC_EXTRA_ARGS; then
         echo
         echo -n "Backup attempt $i/$n failed."
         if [ $i -lt $n ]; then

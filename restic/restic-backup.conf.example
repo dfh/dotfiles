@@ -8,4 +8,5 @@ RESTIC_TARGET="/path/to/restic/repo"
 RESTIC_SOURCE="/path/to/files/to/backup"
 RESTIC_EXCLUDE_FILE="/path/to/exclude/file"
 RESTIC_PASSWORD="{repo password}"
+RESTIC_EXTRA_ARGS='--exclude-if-present "__nobackup__" -o sftp.connections=4'
 RESTIC_BIN="/path/to/restic executable"
