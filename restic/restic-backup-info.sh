@@ -1,11 +1,11 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-echo "Restic info"
+echo "RESTIC BACKUP SYSTEM INFO"
 echo
 echo "----"
 echo
-echo "Settings"
+echo "SETTINGS"
 echo
 echo "Target repo:  $RESTIC_TARGET"
 echo "Source:       $RESTIC_SOURCE"
@@ -15,14 +15,14 @@ echo "Command:      $RESTIC_BIN"
 echo
 echo "----"
 echo
-echo "Repo statistics"
+echo "REPO STATS"
 echo
 restic --repo $RESTIC_TARGET stats
 
 echo
 echo "----"
 echo
-echo "Systemd status"
+echo "SYSTEMD STATUS"
 echo
 
 # systemctl exits with code 3 even though successful for whatever reason
