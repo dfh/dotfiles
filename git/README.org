@@ -2,5 +2,5 @@
 
 Configuration files for git.
 
-So far, it only installs/uninstalls a global gitignore file to
-~$HOME/.config/git/gitignore~.
+- Installs/uninstalls a global gitignore file to ~$HOME/.config/git/gitignore~.
+- Sets user.name and user.email.
