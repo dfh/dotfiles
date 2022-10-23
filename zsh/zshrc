@@ -159,6 +159,7 @@ export BROWSER="firefox"
 export EDITOR="vim"
 export LANG=en_US.UTF-8
 export LC_CTYPE=sv_SE.UTF-8
+export PYTHONPATH="/home/david/files/finances"
 
 #
 # http://zsh.sourceforge.net/Doc/Release/Options.html

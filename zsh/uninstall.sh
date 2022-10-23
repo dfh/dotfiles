@@ -1,35 +1,20 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-echo
-echo "Removing installed files..."
-echo
-
-rm -v ~/.zshenv || true
-rm -v ~/.config/zsh/.zshrc || true
-rm -v ~/.config/zsh/.zimrc || true
-rm -vrf ~/.config/zsh/asciiship-djf || true
-
-echo
-echo "Restoring original zshenv and zshrc if backups found..."
+echo "Deleting files..."
 echo
 
-restored=false
-if [[ -f ~/.zshenv.orig ]]; then
-    mv -v ~/.zshenv.orig ~/.zshenv
-    restored=true
-fi
-if [[ -f ~/.config/zsh/.zshrc.orig ]]; then
-    mv -v ~/.config/zsh/.zshrc.orig ~/.config/zsh/.zshrc
-    restored=true
-fi
-
-if [[ "$restored" = false ]]; then
-    echo "No backups found."
-fi
+#
+# "|| true" makes the script not exit with error if files are not found.
+#
+#
+echo -n "  " && rm -v --interactive ~/.zshenv || true
+echo -n "  " && rm -v --interactive ~/.config/zsh/.zshrc || true
+echo -n "  " && rm -v --interactive ~/.config/zsh/.zimrc || true
+echo -n "  " && rm -v --interactive --recursive ~/.config/zsh/asciiship-djf || true
 
 echo
 echo "All done."
 echo
 
-echo "NOTE! ${HOME}/.config/secrets.sh must be removed manually."
+echo "NOTICE: $HOME/.config/secrets.sh must be removed manually."

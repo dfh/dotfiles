@@ -1,23 +1,21 @@
-* Configuration files for Zsh and Zim
+Zsh configuration files.
 
-** How to install
+* How to install
 
 To install, run ~install.sh~, which copies the files in this directory to their
-respective places. Corresponding files that exist before first installation will
-be saved with ~.orig~ appended.
+respective places.
 
-** How to uninstall
+* How to uninstall
 
-To uninstall, run ~uninstall.sh~. This will remove the installed files and
-restore the original ones.
+To uninstall, run ~uninstall.sh~. This will remove the installed files.
 
-** Secrets.sh
+* Secrets.sh
 
 Upon start, Zsh is set up to source the file ~$HOME/.config/secrets.sh~. Put
 whatever private info you need here. If this file does not exist, Zsh will warn,
 but not fail.
 
-** Zim, a module manager
+* Zim, a module manager
 
 ~$ZDOTDIR~ is set to ~​$HOME/.config/zsh~ in ~​$HOME/.zshenv~.
 
