@@ -175,3 +175,8 @@ setopt sharehistory      # sync history w/ file.
 # cd to dirs in ~/files from anywhere.
 #
 cdpath=($HOME/files)
+
+#
+# A few handy aliases.
+#
+alias reload-zshrc="source ~/.config/zsh/.zshrc"
