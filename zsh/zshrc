@@ -139,7 +139,7 @@ zstyle ':zim' disable-version-check yes  # Don't check for updates
 path+=('/home/david/bin')
 export PATH
 
-fortune
+fortune ~/files/docs/fortunes
 
 if [[ -f $HOME/.config/secrets.sh ]]; then
    source $HOME/.config/secrets.sh
