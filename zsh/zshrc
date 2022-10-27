@@ -170,3 +170,8 @@ setopt histreduceblanks	 # trim blanks.
 setopt histignorealldups # remove all old duplicates.
 setopt histverify	 # don't execute history expansions directly.
 setopt sharehistory      # sync history w/ file.
+
+#
+# cd to dirs in ~/files from anywhere.
+#
+cdpath=($HOME/files)
