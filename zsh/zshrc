@@ -180,3 +180,4 @@ cdpath=($HOME/files)
 # A few handy aliases.
 #
 alias reload-zshrc="source ~/.config/zsh/.zshrc"
+alias tgz="tar-and-gzip.sh"
