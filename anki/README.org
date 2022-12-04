@@ -1,0 +1,15 @@
+#+LANGUAGE: en
+#+AUTHOR: David Högberg (david@hgbrg.se)
+#+DATE: 2022-12-04
+#+VERSION: 2022-12-04
+#+TITLE: Anki
+
+Anki is installed with flatpak. It puts all the Anki data in
+=~/.var/app/net.ankiweb.Anki/data=.
+
+This would make backups harder to do. To fix this, all the Anki data is instead
+put in =archive/anki/=, and the original data directory is symlinked to this
+one.
+
+There is no install/uninstall scripts for this. Just symlink the directory
+manually.
